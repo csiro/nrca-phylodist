@@ -1,0 +1,173 @@
+---
+title: "Phylogenetic Distance"
+author: 
+   - name: "Nunzio Knerr"
+   - name: "Alexander Schmidt-Lebuhn"
+   - name: "Stephanie Chen"
+format: 
+  html:
+    mainfont: "Calibri"
+    monofont: "Calibri"
+    code-fold: TRUE
+    code-summary: "Show the code"
+    code-overflow: wrap
+    code-line-numbers: TRUE
+    embed-resources: TRUE
+    theme: cerulean 
+    toc: true
+  pdf:
+    toc: true
+    toc-depth: 2
+    number-sections: true
+    colorlinks: true
+    include-in-header: 
+      text: |
+        \usepackage{fvextra}
+        \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+    geometry: 
+      - top=30mm
+      - left=30mm
+    mainfont: "Calibri"
+    fontsize: 10pt
+    code-line-numbers: TRUE
+---
+
+## Phylogenetic Distance/Separation
+
+This code contains the functions for calculating the phylogenetic separation as counts of nodes from any given taxon to a target taxon in a phylogenetic tree. The resulting output is a matrix that contains a column with the node count from the target taxon. This is very useful when comparing how closely related any given taxon is to the target taxon in the tree.
+
+## Descendant List Function
+
+First define a function to recursively collect descendants of a node. This is used buy the 'degreeofsep' function later on.
+
+```{r echo=TRUE, eval=TRUE, warning=FALSE, include=TRUE}
+# function to recursively collect descendants of node; is used by degreesofsep function
+
+descendantlist <- function(thistree, thisnode)
+{
+  if (thisnode <= length(thistree$tip.label))
+  {
+    return (thisnode)
+  }
+  else
+  {
+    wherenext <- which(thistree$edge[,1]==thisnode)  # get immediate descendants
+    thislist <- NULL
+    for (x in 1:length(wherenext))
+    {
+      thislist <- c(thislist, descendantlist(thistree, thistree$edge[wherenext[x],2]))
+    }
+    return(thislist)
+  }
+}
+```
+
+## Degree Of Separation Function
+
+```{r echo=TRUE, eval=TRUE, warning=FALSE, include=TRUE}
+# function to calculate degrees of phylogenetic separation between tree tips
+# results are in contrast to phylogenetic distances, asymmetric
+# read resulting matrix line-wise: line shows degrees of separation of taxa in columns, from the target taxon
+
+degreesofsep <- function(thistree)
+{
+  dosmatrix <- matrix(0, nrow=length(thistree$tip.label), ncol=length(thistree$tip.label))
+  colnames(dosmatrix) <- thistree$tip.label
+  rownames(dosmatrix) <- thistree$tip.label
+  for (x in 1:length(thistree$tip.label))
+  {
+    prior_y <- x         # start at present terminal
+    y <- thistree$edge[which(thistree$edge[,2]==x),1]   # get immediately ancestral node
+    currentdist <- 0
+    while (y != (length(thistree$tip.label)+1)) # move downtree until root node is found
+    {
+      currentdesc <- which(thistree$edge[,1]==y)
+      for (z in 1:length(currentdesc))
+      {
+        if (thistree$edge[currentdesc[z],2]!=prior_y)
+        {
+          dosmatrix[x,descendantlist(thistree,thistree$edge[currentdesc[z],2])] <- currentdist
+        }
+      }
+      prior_y <- y
+      y <- thistree$edge[which(thistree$edge[,2]==y),1]   # get immediately ancestral node
+      currentdist <- currentdist + 1
+    }
+    currentdesc <- which(thistree$edge[,1]==y)
+    for (z in 1:length(currentdesc))
+    {
+      if (thistree$edge[currentdesc[z],2]!=prior_y)
+      {
+        dosmatrix[x,descendantlist(thistree,thistree$edge[currentdesc[z],2])] <- currentdist
+      }
+    }
+  }
+  return(dosmatrix)
+}
+
+```
+
+## User Input Variables
+
+Specify the inputs and outputs for use in the script
+
+```{r echo=TRUE, eval=TRUE, warning=FALSE, include=TRUE}
+# the tree to use
+treeFileName <- "astereae_concatenated.tre"
+# a list of taxa in the outgroup
+taxonListForOutgroup <- c("Dimorphotheca_pluvialis", "Ewartia_nubigena", "Abrotanella_nivigena","Cotula_coronopifolia") 
+# the target taxon to calculate the distances/separation from
+myTargetTaxon <- "Erigeron_bonariensis"
+# the output file name to use
+outputFileName <- "phylodists_Erigeron_bonariensis.tsv"
+
+```
+
+## Example Usage
+
+```{r echo=TRUE, eval=TRUE, warning=FALSE, include=TRUE}
+# load libraries
+library(ape)
+library(adephylo)
+
+# read phylogenetic tree
+mytree <- ape::read.tree(treeFileName)
+
+# call the get Most Recent Common Ancesstors (MRCA)
+myOG <- getMRCA(mytree, taxonListForOutgroup)
+#root the tree based on the MRCA results
+mytree <- root(mytree, node = myOG)
+
+# infer matrix of pairwise patristic distances between all terminals
+# this takes quite some time for larger trees
+
+myPatristic <- distTips(mytree)
+myPatristicM <- as.matrix(myPatristic)
+myPatristicMordered <- myPatristicM[order(rownames(myPatristicM)), order(rownames(myPatristicM))]
+#write.matrix(myPatristicMordered, file="patristicdists.tsv", sep="\t")
+
+# now calculate degrees of separation, i.e. counting nodes between any terminal and its ancestral lineage splits
+# this will take quite some time for larger trees
+
+myDegsep <- degreesofsep(mytree)
+myDegsep <- myDegsep[order(rownames(myDegsep)),order(rownames(myDegsep))]
+#write.matrix(myDegsep, file="degsep.tsv", sep="\t")
+
+# make data frame for one target species with both its degrees of separation and patristic distances
+targetTaxon <- myTargetTaxon
+
+Terminal <- row.names(myDegsep)
+
+Degsep <- myDegsep[which(row.names(myDegsep)==targetTaxon),]
+
+PatristicDist <- myPatristicMordered[which(row.names(myPatristicMordered) ==
+                                            targetTaxon),]
+
+PhyloDists <- data.frame(Terminal[order(PatristicDist)], 
+                         Degsep[order(PatristicDist)], 
+                         PatristicDist[order(PatristicDist)])
+
+write.table(PhyloDists, file=outputFileName, sep="\t")
+
+knitr::kable(PhyloDists)
+```
