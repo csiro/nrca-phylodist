@@ -30,6 +30,8 @@ format:
     mainfont: "Calibri"
     fontsize: 10pt
     code-line-numbers: TRUE
+  markdown:
+    variant: gfm
 ---
 
 ## Phylogenetic Distance/Separation
