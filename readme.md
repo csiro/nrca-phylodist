@@ -1,6 +1,5 @@
 ---
 Calculating phylogenetic distances for weed biological control
-
 Authors of code: Nunzio Knerr, Stephanie Chen, Alexander Schmidt-Lebuhn
 ---
 
@@ -143,8 +142,7 @@ write.table(PhyloDists, file=outputFileName, sep="\t")
 
 knitr::kable(PhyloDists)
 ```
-
-The output is a tab separated file with columns for the scientific name, degree of separation and patristic distance. See the file phylodists_Erigeron_bonariensis.tsv for an example that was used as a case study in the published paper.
+The output is a tab separated file with columns for the scientific name, degree of separation and patristic distance. See the file phylodists_Erigeron_bonariensis.tsv for an example that was used as a case study in the paper.
 
 ## Citation and contact information
 Submitted paper: 'Phylogenomics-driven host test list selection for weed biological control'. The corresponding author of the paper is Alexander Schmidt-Lebuhn (alexander.s-l@csiro.au).
