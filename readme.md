@@ -1,16 +1,15 @@
 ---
-title: "Calculating phylogenetic distances for weed biological control"
-author: "Nunzio Knerr", "Stephanie Chen", "Alexander Schmidt-Lebuhn"
+Calculating phylogenetic distances for weed biological control
+
+Authors of code: Nunzio Knerr, Stephanie Chen, Alexander Schmidt-Lebuhn
 ---
 
 ## What does this script do and what is it useful for?
-
 This code was introduced in a submitted paper titled 'Phylogenomics-driven host test list selection for weed biological control'. It contains functions for calculating phylogenetic distance measures useful for creating host tests list in classical weed biological control.
 
 The degree of relatedness between two taxa on a phylogeny is indicated by the number of nodes separating them. Here, we provide functions that calculate two distance measures, degree of separation i.e. node count and patristic distance, given an input phylogenetic tree.
 
 ## Descendant List Function
-
 First define a function to recursively collect descendants of a node. This is used by the 'degreeofsep' function later on.
 
 ``` {.r .cell-code}
@@ -36,7 +35,6 @@ descendantlist <- function(thistree, thisnode)
 ```
 
 ## Degree Of Separation Function
-
 Function for calculating degrees of separation from a specified target weed.
 
 ``` {.r .cell-code}
@@ -82,7 +80,6 @@ degreesofsep <- function(thistree)
 ```
 
 ## User Input Variables
-
 Specify the inputs and outputs for use in the script. A tree file in newick format is required. The outgroup(s) may be specified. The target taxon i.e. target weed for biological control is also specified here so that the distance measures can be calculated in relation to the target.
 
 ``` {.r .cell-code}
@@ -150,5 +147,4 @@ knitr::kable(PhyloDists)
 The output is a tab separated file with columns for the scientific name, degree of separation and patristic distance. See the file phylodists_Erigeron_bonariensis.tsv for an example that was used as a case study in the published paper.
 
 ## Citation and contact information
-
-Submitted paper: 'Phylogenomics-driven host test list selection for weed biological control'. The corresponding author of the paper is Alexander Schmidt-Lebuhn ([alexander.s-l\@csiro.au](mailto:alexander.s-l@csiro.au){.email}).
+Submitted paper: 'Phylogenomics-driven host test list selection for weed biological control'. The corresponding author of the paper is Alexander Schmidt-Lebuhn (alexander.s-l@csiro.au).
