@@ -148,4 +148,4 @@ The output is a tab separated file with columns for the scientific name, degree 
 
 ## Citation and contact information
 
-Submitted paper: 'Phylogenomics-driven host test list selection for weed biological control'. The corresponding author of the paper is Alexander Schmidt-Lebuhn ([alexander.s-l\@csiro.au](mailto:alexander.s-l@csiro.au){.email}).
+Submitted paper: 'Phylogenomics-driven host test list selection for weed biological control'. The corresponding author of the paper is [Alexander Schmidt-Lebuhn](mailto:alexander.s-l@csiro.au).
