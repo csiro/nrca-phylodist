@@ -13,8 +13,6 @@ The degree of relatedness between two taxa on a phylogeny is indicated by the nu
 First define a function to recursively collect descendants of a node. This is used by the 'degreeofsep' function later on.
 
 ``` {.r .cell-code}
-# function to recursively collect descendants of node; is used by degreesofsep function
-
 descendantlist <- function(thistree, thisnode)
 {
   if (thisnode <= length(thistree$tip.label))
@@ -36,13 +34,9 @@ descendantlist <- function(thistree, thisnode)
 
 ## Degree Of Separation Function
 
-Function for calculating degrees of separation from a specified target weed.
+Function for calculating degrees of separation i.e. node count from a specified target weed.
 
 ``` {.r .cell-code}
-# function to calculate degrees of phylogenetic separation between tree tips
-# results are in contrast to phylogenetic distances, asymmetric
-# read resulting matrix line-wise: line shows degrees of separation of taxa in columns, from the target taxon
-
 degreesofsep <- function(thistree)
 {
   dosmatrix <- matrix(0, nrow=length(thistree$tip.label), ncol=length(thistree$tip.label))
@@ -85,19 +79,20 @@ degreesofsep <- function(thistree)
 Specify the inputs and outputs for use in the script. A tree file in newick format is required. The outgroup(s) may be specified. The target taxon i.e. target weed for biological control is also specified here so that the distance measures can be calculated in relation to the target.
 
 ``` {.r .cell-code}
-# the tree to use
+# phylogenetic tree as newick file
 treeFileName <- "astereae_concatenated.tre"
-# a list of taxa in the outgroup
+# specify outgroup(s)
 taxonListForOutgroup <- c("Dimorphotheca_pluvialis", "Ewartia_nubigena", "Abrotanella_nivigena","Cotula_coronopifolia") 
-# the target taxon to calculate the distances/separation from
+# the target taxon to calculate distances from
 myTargetTaxon <- "Erigeron_bonariensis"
-# the output file name to use
-outputFileName <- "phylodists_Erigeron_bonariensis.tsv"
+# the output file name
+outputFileName <- paste0("phylodists_", myTargetTaxon, ".tsv")
 ```
 
 ## Example Usage
 
 ``` {.r .cell-code}
+# load libraries
 # load libraries
 library(ape)
 library(adephylo)
@@ -127,19 +122,17 @@ myDegsep <- myDegsep[order(rownames(myDegsep)),order(rownames(myDegsep))]
 
 # make data frame for one target species with both its degrees of separation and patristic distances
 targetTaxon <- myTargetTaxon
-
 Terminal <- row.names(myDegsep)
-
-Degsep <- myDegsep[which(row.names(myDegsep)==targetTaxon),]
-
+Degsep <- myDegsep[which(row.names(myDegsep)==targetTaxon), ]
 PatristicDist <- myPatristicMordered[which(row.names(myPatristicMordered) ==
-                                            targetTaxon),]
+                                            targetTaxon), ]
 
-PhyloDists <- data.frame(Terminal[order(PatristicDist)], 
-                         Degsep[order(PatristicDist)], 
-                         PatristicDist[order(PatristicDist)])
+PhyloDists <- data.frame(Species = Terminal[order(PatristicDist)], 
+                         DegSep = Degsep[order(PatristicDist)], 
+                         PatristicDist = PatristicDist[order(PatristicDist)],
+                         row.names = NULL)
 
-write.table(PhyloDists, file=outputFileName, sep="\t")
+write.table(PhyloDists, file = outputFileName, sep = "\t", row.names = FALSE)
 
 knitr::kable(PhyloDists)
 ```
