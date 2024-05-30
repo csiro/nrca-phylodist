@@ -141,4 +141,8 @@ The output is a tab separated file with columns for the scientific name, degree 
 
 ## Citation and contact information
 
-Submitted paper: 'Phylogenomics-driven host test list selection for weed biological control'. The corresponding author of the paper is [Alexander Schmidt-Lebuhn](mailto:alexander.s-l@csiro.au).
+Please cite the following paper if you use these scripts:
+
+Stephanie H. Chen, Ben Gooden, Michelle A. Rafter, Gavin C. Hunter, Alicia Grealy, Nunzio Knerr, Alexander N. Schmidt-Lebuhn. *Phylogenomics-driven host test list selection for weed biological control*. Biological Control, Volume 193, 2024, 105529, <https://doi.org/10.1016/j.biocontrol.2024.105529>[\
+\
+](#0)Contact the corresponding author of the paper, [Alexander Schmidt-Lebuhn](mailto:alexander.s-l@csiro.au), if you have any questions.
