@@ -139,6 +139,15 @@ knitr::kable(PhyloDists)
 
 The output is a tab separated file with columns for the scientific name, degree of separation and patristic distance. See the file phylodists_Erigeron_bonariensis.tsv for an example that was used as a case study in the paper.
 
+## Copyright and license information
+Copyright (C) 2024  CSIRO
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 ## Citation and contact information
 
 Please cite the following paper if you use these scripts:
