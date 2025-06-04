@@ -1,0 +1,43 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the paper it is published in as below."
+# This CITATION.cff reference content was generated from Zotero.
+references:
+  - title: >-
+      Phylogenomics-driven host test list selection for weed biological control
+    abstract: |
+      A concern in weed biological control research is the potential for candidate biocontrol agents to impact not only the target weed but also native or economically important flora. The degree of evolutionary relatedness between the target weed species and a non-target species is a key predictor of the susceptibility of the non-target to the biocontrol agent. To manage this risk, biocontrol practitioners need to understand the phylogenetic position of the host weed relative to non-target plant species. However, comprehensively sampled phylogenetic trees are often unavailable, with incomplete information scattered across multiple publications. Further, older published phylogenies based on Sanger sequence data often lack branch resolution and support, which increases uncertainty in biocontrol decision making. Decreasing sequencing cost and technological advances have led to phylogenomic approaches being more widely used to understand evolutionary relationships between species. For example, target capture sequencing methods using bait kits such as Angiosperms353 enable cost-effective and timely phylogenomic-level analysis of flowering plant groups at different scales. Here, we introduce a workflow to embed a comprehensive understanding of evolutionary relationships into the efficient development of host test lists in weed biological control. We demonstrate the effectiveness of the workflow through a case study on the major crop weed flaxleaf fleabane (Erigeron bonariensis). Phylogenomic analysis was conducted on 280 species of the tribe Astereae (family Asteraceae) occurring in Australia and New Zealand, clarifying relationships between the target species and related clades of native and non-native Astereae. We consider the phylogenetic tree in the context of a previously proposed host test list and discuss taxonomic implications, highlighting avenues of future molecular-based work to uncover the origin of Australian fleabanes. This study provides a workflow and demonstrates the practical application of target sequence capture for phylogenomic inference to support risk analysis and decision making in classical weed biological control.
+    type: journalArticle
+    license: All rights reserved
+    copyright: All rights reserved
+    issn: 1049-9644
+    journal: Biological Control
+    pages: 105529
+    volume: 193
+    url: https://www.sciencedirect.com/science/article/pii/S104996442400094X
+    keywords: 
+      - Asteraceae
+      - Degrees of separation
+      - Fleabane
+      - Host test list
+      - Phylogenetic distance
+      - Phylogenomics
+      - Target sequence capture
+    authors: 
+      - family-names: Chen
+        given-names: Stephanie H.
+      - family-names: Gooden
+        given-names: Ben
+      - family-names: Rafter
+        given-names: Michelle A.
+      - family-names: Hunter
+        given-names: Gavin C.
+      - family-names: Grealy
+        given-names: Alicia
+      - family-names: Knerr
+        given-names: Nunzio
+      - family-names: Schmidt-Lebuhn
+        given-names: Alexander N.
+    date-published: 2024-06-01
+    identifiers: 
+      - type: doi
+        value: 10.1016/j.biocontrol.2024.105529
